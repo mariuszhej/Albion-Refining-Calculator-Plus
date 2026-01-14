@@ -1,4 +1,4 @@
-// Albion Online Refining Calculator - Main JavaScript v0.0.4
+// Albion Online Refining Calculator - Main JavaScript v0.0.5
 // Author: mariuszhej
 // GitHub: https://github.com/mariuszhej/Albion-Refining-Calculator-Plus
 
@@ -282,7 +282,9 @@ class AlbionRefiningCalculator {
             
             // Close dropdown when clicking outside
             document.addEventListener('click', (e) => {
-                if (!optionsToggle.contains(e.target) && !optionsDropdown.contains(e.target)) {
+                if (optionsToggle && optionsDropdown && 
+                    !optionsToggle.contains(e.target) && 
+                    !optionsDropdown.contains(e.target)) {
                     optionsDropdown.classList.add('hidden');
                 }
             });

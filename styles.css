@@ -344,9 +344,11 @@ button:focus {
 }
 
 /* Options Dropdown Styles */
-.options-dropdown {
+#optionsDropdown {
     backdrop-filter: blur(10px);
     animation: fadeIn 0.2s ease-out;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(75, 85, 99, 0.8);
 }
 
 @keyframes fadeIn {
