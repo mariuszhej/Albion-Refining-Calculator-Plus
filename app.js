@@ -1,4 +1,4 @@
-// Albion Online Refining Calculator - Main JavaScript v0.0.7
+// Albion Online Refining Calculator - Main JavaScript v0.0.8
 // Author: mariuszhej
 // GitHub: https://github.com/mariuszhej/Albion-Refining-Calculator-Plus
 
@@ -267,62 +267,56 @@ class AlbionRefiningCalculator {
         });
     }
     
-    setupTopNavigation() {
-        // Settings dropdown
-        this.setupTopSettingsDropdown();
-        
-        // Tools dropdown
-        this.setupToolsDropdown();
+    setupMainNavigation() {
+        // Settings section toggle
+        this.setupMainSections();
         
         // Quick refresh button
         this.setupQuickRefresh();
         
-        // Server status
-        this.setupServerStatus();
-        
-        // Help button
-        this.setupHelpButton();
+        // Theme toggle
+        this.setupThemeToggle();
     }
     
-    setupTopSettingsDropdown() {
-        const settingsToggle = document.getElementById('topSettingsToggle');
-        const settingsDropdown = document.getElementById('topSettingsDropdown');
+    setupMainSections() {
+        // Settings section toggle
+        this.setupMainSettingsSection();
         
-        if (settingsToggle && settingsDropdown) {
-            console.log('Setting up top settings dropdown');
+        // Tools section toggle
+        this.setupMainToolsSection();
+        
+        // Info section toggle
+        this.setupMainInfoSection();
+    }
+    
+    setupMainSettingsSection() {
+        const settingsToggle = document.getElementById('toggleSettingsSection');
+        const settingsSection = document.getElementById('mainSettingsSection');
+        
+        if (settingsToggle && settingsSection) {
+            console.log('Setting up main settings section');
             
-            settingsToggle.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                settingsDropdown.classList.toggle('hidden');
+            settingsToggle.addEventListener('click', () => {
+                settingsSection.classList.toggle('hidden');
+                
+                // Hide other sections when opening settings
+                document.getElementById('mainToolsSection').classList.add('hidden');
+                document.getElementById('mainInfoSection').classList.add('hidden');
             });
             
-            // Close dropdown when clicking outside
-            document.addEventListener('click', (e) => {
-                if (settingsToggle && settingsDropdown && 
-                    !settingsToggle.contains(e.target) && 
-                    !settingsDropdown.contains(e.target)) {
-                    settingsDropdown.classList.add('hidden');
-                }
-            });
-            
-            // Header checkbox listeners
-            ['hideFocusColumnsTop', 'showDetailColumnsTop', 'hideUnusedRowsTop', 'compactModeTop', 'showTooltipsTop'].forEach(id => {
+            // Settings checkbox listeners
+            ['hideFocusColumnsMain', 'showDetailColumnsMain', 'hideUnusedRowsMain', 'compactModeMain', 'showTooltipsMain'].forEach(id => {
                 const checkbox = document.getElementById(id);
                 if (checkbox) {
                     checkbox.addEventListener('change', () => {
-                        const settingId = id.replace('Top', '');
-                        const mainCheckbox = document.getElementById(settingId);
-                        if (mainCheckbox) {
-                            mainCheckbox.checked = checkbox.checked;
-                            mainCheckbox.dispatchEvent(new Event('change'));
-                        }
+                        this.saveSettings();
+                        this.calculateProfits();
                     });
                 }
             });
             
             // Reset settings button
-            const resetBtn = document.getElementById('resetAllSettingsTop');
+            const resetBtn = document.getElementById('resetMainSettings');
             if (resetBtn) {
                 resetBtn.addEventListener('click', () => {
                     this.resetAllSettings();
