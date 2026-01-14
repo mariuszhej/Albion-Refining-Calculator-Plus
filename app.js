@@ -1,4 +1,4 @@
-// Albion Online Refining Calculator - Main JavaScript v0.0.5
+// Albion Online Refining Calculator - Main JavaScript v0.0.6
 // Author: mariuszhej
 // GitHub: https://github.com/mariuszhej/Albion-Refining-Calculator-Plus
 
@@ -851,14 +851,26 @@ class AlbionRefiningCalculator {
     }
     
     getItemImage(itemCode, isProduct = false) {
+        // Use local WebP images for better performance
+        const baseUrl = './images/resources/';
+        
         if (isProduct) {
             // Convert resource to product
-            if (itemCode.includes('_CLOTH')) return `https://render.albiononline.com/v1/item/${itemCode}_SET1.png`;
-            if (itemCode.includes('_METALBAR')) return `https://render.albiononline.com/v1/item/${itemCode}_SET1.png`;
-            if (itemCode.includes('_LEATHER')) return `https://render.albiononline.com/v1/item/${itemCode}_SET1.png`;
-            if (itemCode.includes('_PLANKS')) return `https://render.albiononline.com/v1/item/${itemCode}_SET1.png`;
-            if (itemCode.includes('_STONEBLOCK')) return `https://render.albiononline.com/v1/item/${itemCode}_SET1.png`;
+            if (itemCode.includes('_CLOTH')) return `${baseUrl}cloth/${itemCode.replace('_CLOTH', 'T4_CLOTH')}_SET1.webp`;
+            if (itemCode.includes('_METALBAR')) return `${baseUrl}bar/${itemCode.replace('_METALBAR', 'T4_METALBAR')}_SET1.webp`;
+            if (itemCode.includes('_LEATHER')) return `${baseUrl}leather/${itemCode.replace('_LEATHER', 'T4_LEATHER')}_SET1.webp`;
+            if (itemCode.includes('_PLANKS')) return `${baseUrl}planks/${itemCode.replace('_PLANKS', 'T4_PLANKS')}_SET1.webp`;
+            if (itemCode.includes('_STONEBLOCK')) return `${baseUrl}stoneblock/${itemCode.replace('_STONEBLOCK', 'T4_STONEBLOCK')}_SET1.webp`;
         }
+        
+        // For resources and buttons
+        if (itemCode.includes('_CLOTH')) return `${baseUrl}cloth/T2_CLOTH.webp`;
+        if (itemCode.includes('_METALBAR')) return `${baseUrl}bar/T2_METALBAR.webp`;
+        if (itemCode.includes('_LEATHER')) return `${baseUrl}leather/T2_LEATHER.webp`;
+        if (itemCode.includes('_PLANKS')) return `${baseUrl}planks/T2_PLANKS.webp`;
+        if (itemCode.includes('_STONEBLOCK')) return `${baseUrl}stoneblock/T2_STONEBLOCK.webp`;
+        
+        // Fallback to render API
         return `https://render.albiononline.com/v1/item/${itemCode}.png`;
     }
     
