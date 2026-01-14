@@ -684,46 +684,49 @@ class AlbionRefiningCalculator {
         
         tableHeader += `</tr></thead>`;
         
-        const tableBody = filteredResults.map(result => `
-            <tr>
-                <td><span class="tier-badge tier-${result.tier.substring(1)}">${result.tier}</span></td>
-                <td>
-                    <img src="${this.getItemImage(result.tier)}" alt="Resource" class="item-image">
-                    ${this.formatPrice(result.resourcePrice)}
-                </td>
-                <td>${this.formatPrice(result.resourceCost)}</td>
-                <td>
-                    <img src="${this.getItemImage(result.tier, true)}" alt="Product" class="item-image">
-                    ${this.formatPrice(result.productPrice)}
-                </td>
-                <td>${this.formatPrice(result.productPrice * result.productAmount * (1 + parseFloat(document.getElementById('dailyBonus').value) / 100))}</td>
-                <td class="${result.profitWithReturns >= 0 ? 'profit-positive' : 'profit-negative'}">
-                    ${this.formatPrice(result.profitWithReturns)}
-                </td>
-                <td class="${result.profitPercentWithReturns >= 0 ? 'profit-positive' : 'profit-negative'}">
-                    ${result.profitPercentWithReturns.toFixed(1)}%
-                </td>
-        `;
-        
-        if (!hideFocus) {
-            tableBody += `
-                <td>${result.focusCost}</td>
-                <td class="${result.profitPerFocus >= 0 ? 'profit-positive' : 'profit-negative'}">
-                    ${result.profitPerFocus.toFixed(1)}
-                </td>
+        const tableBody = filteredResults.map(result => {
+            let row = `
+                <tr>
+                    <td><span class="tier-badge tier-${result.tier.substring(1)}">${result.tier}</span></td>
+                    <td>
+                        <img src="${this.getItemImage(result.tier)}" alt="Resource" class="item-image">
+                        ${this.formatPrice(result.resourcePrice)}
+                    </td>
+                    <td>${this.formatPrice(result.resourceCost)}</td>
+                    <td>
+                        <img src="${this.getItemImage(result.tier, true)}" alt="Product" class="item-image">
+                        ${this.formatPrice(result.productPrice)}
+                    </td>
+                    <td>${this.formatPrice(result.productPrice * result.productAmount * (1 + parseFloat(document.getElementById('dailyBonus').value) / 100))}</td>
+                    <td class="${result.profitWithReturns >= 0 ? 'profit-positive' : 'profit-negative'}">
+                        ${this.formatPrice(result.profitWithReturns)}
+                    </td>
+                    <td class="${result.profitPercentWithReturns >= 0 ? 'profit-positive' : 'profit-negative'}">
+                        ${result.profitPercentWithReturns.toFixed(1)}%
+                    </td>
             `;
-        }
-        
-        if (showDetails) {
-            tableBody += `
-                <td>${this.formatPrice(result.resourceCost)}</td>
-                <td>${this.formatPrice(result.usageFee)}</td>
-                <td>${this.formatPrice(result.marketTax)}</td>
-                <td>${result.productAmount}</td>
-            `;
-        }
-        
-        tableBody += `</tr>`;
+            
+            if (!hideFocus) {
+                row += `
+                    <td>${result.focusCost}</td>
+                    <td class="${result.profitPerFocus >= 0 ? 'profit-positive' : 'profit-negative'}">
+                        ${result.profitPerFocus.toFixed(1)}
+                    </td>
+                `;
+            }
+            
+            if (showDetails) {
+                row += `
+                    <td>${this.formatPrice(result.resourceCost)}</td>
+                    <td>${this.formatPrice(result.usageFee)}</td>
+                    <td>${this.formatPrice(result.marketTax)}</td>
+                    <td>${result.productAmount}</td>
+                `;
+            }
+            
+            row += `</tr>`;
+            return row;
+        });
         
         const table = `
             <div class="overflow-x-auto">
