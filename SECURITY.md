@@ -13,7 +13,8 @@ Only the latest version of Albion Refining Calculator receives security updates.
 If you discover a security vulnerability, please report it responsibly:
 
 1. **Do not** open a public issue
-2. Send an email to: security@example.com
+2. Send an email to: mariuszhej@users.noreply.github.com
+3. Create a security advisory on GitHub: https://github.com/mariuszhej/Albion-Refining-Calculator-Plus/security/advisories/new
 3. Include:
    - Vulnerability description
    - Steps to reproduce

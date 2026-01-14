@@ -2,6 +2,10 @@
 
 Nowoczesny, responsywny kalkulator przetwarzania Albion Online z zaawansowanymi funkcjami analitycznymi.
 
+**Autor:** [mariuszhej](https://github.com/mariuszhej)  
+**GitHub:** [Albion-Refining-Calculator-Plus](https://github.com/mariuszhej/Albion-Refining-Calculator-Plus)  
+**Live Demo:** https://mariuszhej.github.io/Albion-Refining-Calculator-Plus/
+
 ## ✨ Funkcje
 
 ### 🧮 Obliczenia zysku
@@ -34,6 +38,12 @@ Nowoczesny, responsywny kalkulator przetwarzania Albion Online z zaawansowanymi 
 2. **Ustaw miasta** - Wybierz miasta dla zakupu surowców i sprzedaży produktów
 3. **Aktualizuj ceny** - Kliknij "Aktualizuj wszystkie ceny" aby pobrać aktualne dane
 4. **Analizuj wyniki** - Przejrzyj tabelę z zyskami i rekomendacjami
+
+## 🔗 Linki
+
+- **GitHub Repository:** https://github.com/mariuszhej/Albion-Refining-Calculator-Plus
+- **Live Application:** https://mariuszhej.github.io/Albion-Refining-Calculator-Plus/
+- **Report Issues:** https://github.com/mariuszhej/Albion-Refining-Calculator-Plus/issues
 
 ## ⚙️ Ustawienia
 
@@ -101,10 +111,10 @@ Aplikacja działa na:
 
 ```bash
 # Klonuj repozytorium
-git clone https://github.com/twoj-nazwa-uzytkownika/albion-refining-calculator.git
+git clone https://github.com/mariuszhej/Albion-Refining-Calculator-Plus.git
 
 # Przejdź do katalogu
-cd albion-refining-calculator
+cd Albion-Refining-Calculator-Plus
 
 # Uruchom lokalny serwer
 python -m http.server 8000
@@ -113,6 +123,14 @@ npx serve .
 ```
 
 ## 📝 Aktualizacje
+
+### v0.0.3 (2025)
+- 🐛 **Naprawiono aktywację przycisków zasobów** - Teraz poprawnie się podświetlają
+- 🐛 **Poprawiono działanie event listeners** - Lepsze zarządzanie DOM
+- 🐛 **Dodano debugowanie console.log** - Łatwiejsze diagnozowanie problemów
+- 🔧 **Zwiększono odporność na błędy** - Safe element checking
+- 🔧 **Poprawiono inicjalizację** - Lepsze DOM ready handling
+- 🔗 **Zaktualizowano wszystkie linki** - Poprawne odniesienia do GitHub
 
 ### v0.0.2 (2025)
 - ✅ **Poprawiony problem z cenami** - Teraz działają poprawnie
@@ -153,14 +171,15 @@ MIT License - zobacz plik [LICENSE](LICENSE) dla szczegółów.
 
 ## 📞 Kontakt
 
-- 📧 GitHub Issues: https://github.com/twoj-nazwa-uzytkownika/albion-refining-calculator/issues
-- 🎮 Discord: [Twój Discord]
+- 📧 GitHub Issues: https://github.com/mariuszhej/Albion-Refining-Calculator-Plus/issues
+- 📧 Email: mariuszhej@users.noreply.github.com
+- 🎮 GitHub: [mariuszhej](https://github.com/mariuszhej)
 
 ---
 
 **Created with ❤️ for Albion Online Community**
 
 Jeśli aplikacja jest pomocna, rozważ:
-- ⭐ Danie gwiazdki na GitHub
+- ⭐ Danie gwiazdki na GitHub: https://github.com/mariuszhej/Albion-Refining-Calculator-Plus
 - 🔄 Udostępnienie znajomym
 - 💰 Wsparcie projektu

@@ -1,4 +1,6 @@
-// Albion Online Refining Calculator - Main JavaScript v0.0.2
+// Albion Online Refining Calculator - Main JavaScript v0.0.3
+// Author: mariuszhej
+// GitHub: https://github.com/mariuszhej/Albion-Refining-Calculator-Plus
 
 class AlbionRefiningCalculator {
     constructor() {
@@ -126,34 +128,66 @@ class AlbionRefiningCalculator {
     }
     
     init() {
+        console.log('Initializing Albion Refining Calculator...');
+        
+        // Wait for DOM to be ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                this.afterDOMReady();
+            });
+        } else {
+            this.afterDOMReady();
+        }
+    }
+    
+    afterDOMReady() {
+        console.log('DOM ready, setting up calculator...');
+        
         this.setupEventListeners();
         this.applySettings();
         this.loadStoredPrices();
         this.updateLastUpdateTime();
         this.calculateProfits(); // Calculate on init to show any existing prices
+        
+        console.log('Calculator initialized successfully');
+        console.log('Current resource:', this.currentResource);
+        console.log('Available resource buttons:', document.querySelectorAll('.resource-btn').length);
     }
     
     setupEventListeners() {
+        console.log('Setting up event listeners...');
+        
         // Resource selection
         document.querySelectorAll('.resource-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                console.log('Resource button clicked:', btn.dataset.resource);
                 this.selectResource(btn.dataset.resource);
             });
         });
         
         // Settings toggle
-        document.getElementById('settingsToggle').addEventListener('click', () => {
-            const panel = document.getElementById('settingsPanel');
-            panel.classList.toggle('hidden');
-        });
+        const settingsToggle = document.getElementById('settingsToggle');
+        if (settingsToggle) {
+            settingsToggle.addEventListener('click', () => {
+                const panel = document.getElementById('settingsPanel');
+                if (panel) {
+                    panel.classList.toggle('hidden');
+                }
+            });
+        }
         
         // Update prices
-        document.getElementById('updateAllPrices').addEventListener('click', () => {
-            this.updateAllPrices();
-        });
+        const updateBtn = document.getElementById('updateAllPrices');
+        if (updateBtn) {
+            updateBtn.addEventListener('click', () => {
+                this.updateAllPrices();
+            });
+        }
         
         // Settings changes
-        document.querySelectorAll('#settingsPanel select, #settingsPanel input').forEach(input => {
+        const settingsElements = document.querySelectorAll('#settingsPanel select, #settingsPanel input');
+        settingsElements.forEach(input => {
             input.addEventListener('change', () => {
                 this.saveSettings();
                 this.calculateProfits();
@@ -161,53 +195,81 @@ class AlbionRefiningCalculator {
         });
         
         // Return rate custom handling
-        document.getElementById('returnRate').addEventListener('change', () => {
-            const customInput = document.getElementById('customReturnRate');
-            if (this.returnRate.value === 'custom') {
-                customInput.classList.remove('hidden');
-            } else {
-                customInput.classList.add('hidden');
-            }
-        });
+        const returnRateSelect = document.getElementById('returnRate');
+        if (returnRateSelect) {
+            returnRateSelect.addEventListener('change', () => {
+                const customInput = document.getElementById('customReturnRate');
+                if (customInput) {
+                    if (returnRateSelect.value === 'custom') {
+                        customInput.classList.remove('hidden');
+                    } else {
+                        customInput.classList.add('hidden');
+                    }
+                }
+            });
+        }
         
         // Price type changes
-        document.getElementById('priceType').addEventListener('change', () => {
-            const timeSection = document.getElementById('timePeriodSection');
-            if (this.priceType.value === 'average') {
-                timeSection.classList.remove('hidden');
-            } else {
-                timeSection.classList.add('hidden');
-            }
-        });
+        const priceTypeSelect = document.getElementById('priceType');
+        if (priceTypeSelect) {
+            priceTypeSelect.addEventListener('change', () => {
+                const timeSection = document.getElementById('timePeriodSection');
+                if (timeSection) {
+                    if (priceTypeSelect.value === 'average') {
+                        timeSection.classList.remove('hidden');
+                    } else {
+                        timeSection.classList.add('hidden');
+                    }
+                }
+            });
+        }
         
         // Server sync between settings and price update
-        document.getElementById('serverSelect').addEventListener('change', () => {
-            document.getElementById('priceServerSelect').value = this.serverSelect.value;
-        });
+        const serverSelect = document.getElementById('serverSelect');
+        const priceServerSelect = document.getElementById('priceServerSelect');
         
-        document.getElementById('priceServerSelect').addEventListener('change', () => {
-            document.getElementById('serverSelect').value = this.priceServerSelect.value;
-            this.saveSettings();
-        });
+        if (serverSelect && priceServerSelect) {
+            serverSelect.addEventListener('change', () => {
+                priceServerSelect.value = serverSelect.value;
+            });
+            
+            priceServerSelect.addEventListener('change', () => {
+                serverSelect.value = priceServerSelect.value;
+                this.saveSettings();
+            });
+        }
         
         // Auto-update prices when cities change
         ['resourceCity', 'productCity', 'priceServerSelect', 'priceType', 'timePeriod', 'itemQuality'].forEach(id => {
-            document.getElementById(id).addEventListener('change', () => {
-                if (this.prices && Object.keys(this.prices).length > 0) {
-                    this.calculateProfits();
-                }
-            });
+            const element = document.getElementById(id);
+            if (element) {
+                element.addEventListener('change', () => {
+                    if (this.prices && Object.keys(this.prices).length > 0) {
+                        this.calculateProfits();
+                    }
+                });
+            }
         });
+        
+        console.log('Event listeners setup complete');
     }
     
     selectResource(resource) {
+        console.log('Selecting resource:', resource);
         this.currentResource = resource;
         
         // Update UI
         document.querySelectorAll('.resource-btn').forEach(btn => {
             btn.classList.remove('active');
         });
-        document.querySelector(`[data-resource="${resource}"]`).classList.add('active');
+        
+        const targetBtn = document.querySelector(`[data-resource="${resource}"]`);
+        if (targetBtn) {
+            targetBtn.classList.add('active');
+            console.log('Resource button activated:', resource);
+        } else {
+            console.error('Resource button not found:', resource);
+        }
         
         this.calculateProfits();
         this.updateResourceImages();
@@ -751,6 +813,18 @@ class AlbionRefiningCalculator {
 
 // Initialize calculator
 let calculator;
-document.addEventListener('DOMContentLoaded', () => {
+
+// Try to initialize immediately
+try {
     calculator = new AlbionRefiningCalculator();
-});
+} catch (error) {
+    console.error('Error initializing calculator:', error);
+    // Fallback to DOMContentLoaded
+    document.addEventListener('DOMContentLoaded', () => {
+        try {
+            calculator = new AlbionRefiningCalculator();
+        } catch (fallbackError) {
+            console.error('Fallback initialization failed:', fallbackError);
+        }
+    });
+}
