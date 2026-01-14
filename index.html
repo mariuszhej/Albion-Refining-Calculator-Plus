@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Albion Online Kalkulator Przetwarzania</title>
+    <meta name="description" content="Nowoczesny kalkulator przetwarzania Albion Online - oblicz zyski, wymagania materiałowe i najlepsze miasta sprzedaży.">
+    <meta name="keywords" content="albion online, kalkulator przetwarzania, refining, zysk, materiały, ceny">
+    <meta name="author" content="Albion Refining Calculator">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Albion Online Kalkulator Przetwarzania">
+    <meta property="og:description" content="Nowoczesny kalkulator przetwarzania Albion Online - oblicz zyski, wymagania materiałowe i najlepsze miasta sprzedaży">
+    <meta property="og:type" content="website">
+    
+    <!-- CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen">
+    <!-- Header -->
+    <header class="bg-gray-800 shadow-lg border-b border-gray-700">
+        <nav class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <i class="bi bi-calculator text-2xl text-blue-400"></i>
+                    <h1 class="text-2xl font-bold text-white">Albion Online Kalkulator Przetwarzania</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button id="themeToggle" class="p-2 rounded-lg bg-gray-700 hover:bg-gray-600 transition-colors">
+                        <i class="bi bi-moon-stars text-yellow-400"></i>
+                    </button>
+                    <button id="settingsToggle" class="p-2 rounded-lg bg-gray-700 hover:bg-gray-600 transition-colors">
+                        <i class="bi bi-gear text-gray-300"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-6">
+        <!-- Settings Panel (Initially Hidden) -->
+        <div id="settingsPanel" class="hidden bg-gray-800 rounded-lg p-6 mb-6 border border-gray-700">
+            <h2 class="text-xl font-semibold mb-4 text-white">Ustawienia</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Server Selection -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Serwer</label>
+                    <select id="serverSelect" class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white">
+                        <option value="europe">Europa</option>
+                        <option value="west">Ameryka</option>
+                        <option value="east">Azja</option>
+                    </select>
+                </div>
+
+                <!-- Market Tax -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Podatek rynku</label>
+                    <select id="marketTax" class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white">
+                        <option value="2.5">2.5% (Bez premii)</option>
+                        <option value="6.5" selected>6.5% (Standardowy)</option>
+                        <option value="10.5">10.5% (Z premią)</option>
+                    </select>
+                </div>
+
+                <!-- Return Rate -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Wskaźnik zwrotu</label>
+                    <select id="returnRate" class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white">
+                        <option value="15.2">Królewskie Miasto (15.2%)</option>
+                        <option value="36.7">Królewskie Miasto + Bonus (36.7%)</option>
+                        <option value="0">Królewska Wyspa (0%)</option>
+                        <option value="28.5">Królewska Wyspa + Bonus (28.5%)</option>
+                    </select>
+                </div>
+
+                <!-- Usage Fee -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Opłata za użycie</label>
+                    <input type="number" id="usageFee" value="0" min="0" max="9999" 
+                           class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white">
+                </div>
+
+                <!-- Daily Bonus -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Dzienny bonus</label>
+                    <select id="dailyBonus" class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white">
+                        <option value="0">0%</option>
+                        <option value="10">10%</option>
+                        <option value="20">20%</option>
+                    </select>
+                </div>
+
+                <!-- Mastery Levels -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Poziom mistrzostwa T4-T8</label>
+                    <div class="flex space-x-2">
+                        <input type="number" id="masteryT4" value="0" min="0" max="100" placeholder="T4" 
+                               class="w-1/4 px-2 py-1 bg-gray-700 border border-gray-600 rounded text-white text-sm">
+                        <input type="number" id="masteryT5" value="0" min="0" max="100" placeholder="T5" 
+                               class="w-1/4 px-2 py-1 bg-gray-700 border border-gray-600 rounded text-white text-sm">
+                        <input type="number" id="masteryT6" value="0" min="0" max="100" placeholder="T6" 
+                               class="w-1/4 px-2 py-1 bg-gray-700 border border-gray-600 rounded text-white text-sm">
+                        <input type="number" id="masteryT7" value="0" min="0" max="100" placeholder="T7" 
+                               class="w-1/4 px-2 py-1 bg-gray-700 border border-gray-600 rounded text-white text-sm">
+                        <input type="number" id="masteryT8" value="0" min="0" max="100" placeholder="T8" 
+                               class="w-1/4 px-2 py-1 bg-gray-700 border border-gray-600 rounded text-white text-sm">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resource Selection -->
+        <div class="bg-gray-800 rounded-lg p-6 mb-6 border border-gray-700">
+            <h2 class="text-xl font-semibold mb-4 text-white">Wybierz zasób do przetwarzania</h2>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                <button class="resource-btn active" data-resource="cloth">
+                    <div class="bg-gray-700 rounded-lg p-4 hover:bg-gray-600 transition-colors text-center">
+                        <div class="text-2xl mb-2">🧵</div>
+                        <div class="text-sm font-medium">Tkanina</div>
+                    </div>
+                </button>
+                
+                <button class="resource-btn" data-resource="bar">
+                    <div class="bg-gray-700 rounded-lg p-4 hover:bg-gray-600 transition-colors text-center">
+                        <div class="text-2xl mb-2">⚒️</div>
+                        <div class="text-sm font-medium">Sztabka</div>
+                    </div>
+                </button>
+                
+                <button class="resource-btn" data-resource="leather">
+                    <div class="bg-gray-700 rounded-lg p-4 hover:bg-gray-600 transition-colors text-center">
+                        <div class="text-2xl mb-2">🦴</div>
+                        <div class="text-sm font-medium">Skóra</div>
+                    </div>
+                </button>
+                
+                <button class="resource-btn" data-resource="plank">
+                    <div class="bg-gray-700 rounded-lg p-4 hover:bg-gray-600 transition-colors text-center">
+                        <div class="text-2xl mb-2">🪵</div>
+                        <div class="text-sm font-medium">Deska</div>
+                    </div>
+                </button>
+                
+                <button class="resource-btn" data-resource="stone">
+                    <div class="bg-gray-700 rounded-lg p-4 hover:bg-gray-600 transition-colors text-center">
+                        <div class="text-2xl mb-2">🪨</div>
+                        <div class="text-sm font-medium">Kamień</div>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Price Update Section -->
+        <div class="bg-gray-800 rounded-lg p-6 mb-6 border border-gray-700">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-xl font-semibold text-white">Aktualizuj ceny</h2>
+                <button id="updateAllPrices" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors text-white">
+                    <i class="bi bi-arrow-clockwise mr-2"></i>Aktualizuj wszystkie ceny
+                </button>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Miasto - surowce</label>
+                    <select id="resourceCity" class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white">
+                        <option value="Caerleon">Caerleon</option>
+                        <option value="Thetford">Thetford</option>
+                        <option value="Fort Sterling">Fort Sterling</option>
+                        <option value="Lymhurst">Lymhurst</option>
+                        <option value="Bridgewatch">Bridgewatch</option>
+                        <option value="Martlock">Martlock</option>
+                        <option value="Brecilien">Brecilien</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Miasto - produkty</label>
+                    <select id="productCity" class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white">
+                        <option value="Caerleon">Caerleon</option>
+                        <option value="Thetford">Thetford</option>
+                        <option value="Fort Sterling">Fort Sterling</option>
+                        <option value="Lymhurst">Lymhurst</option>
+                        <option value="Bridgewatch">Bridgewatch</option>
+                        <option value="Martlock">Martlock</option>
+                        <option value="Brecilien">Brecilien</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="mt-4">
+                <div class="bg-blue-900 bg-opacity-50 border border-blue-700 rounded-lg p-4">
+                    <div class="flex items-center">
+                        <i class="bi bi-info-circle text-blue-400 mr-2"></i>
+                        <span class="text-sm text-blue-200">
+                            Ceny są aktualizowane z Albion Online Data Project API. Ostatnia aktualizacja: <span id="lastUpdate">Nigdy</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calculation Results -->
+        <div class="bg-gray-800 rounded-lg p-6 mb-6 border border-gray-700">
+            <h2 class="text-xl font-semibold mb-4 text-white">Wyniki obliczeń</h2>
+            
+            <div id="resultsContainer">
+                <!-- Results will be dynamically loaded here -->
+                <div class="text-center py-8 text-gray-400">
+                    <i class="bi bi-calculator text-4xl mb-2"></i>
+                    <p>Wybierz zasób i zaktualizuj ceny, aby zobaczyć wyniki</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional Features -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Material Requirements -->
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                <h2 class="text-xl font-semibold mb-4 text-white">
+                    <i class="bi bi-box-seam mr-2"></i>Wymagania materiałowe
+                </h2>
+                <div id="materialRequirements">
+                    <p class="text-gray-400 text-center py-4">Wybierz produkt, aby zobaczyć wymagania</p>
+                </div>
+            </div>
+
+            <!-- Best Cities for Selling -->
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                <h2 class="text-xl font-semibold mb-4 text-white">
+                    <i class="bi bi-geo-alt mr-2"></i>Najlepsze miasta sprzedaży
+                </h2>
+                <div id="bestCities">
+                    <p class="text-gray-400 text-center py-4">Wybierz produkt, aby zobaczyć najlepsze miasta</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 border-t border-gray-700 mt-12">
+        <div class="container mx-auto px-4 py-6">
+            <div class="text-center text-gray-400">
+                <p class="mb-2">
+                    <i class="bi bi-info-circle mr-1"></i>
+                    Dane rynkowe pobierane z Albion Online Data Project
+                </p>
+                <p class="text-sm">
+                    Created with ❤️ for Albion Online community | 
+                    <a href="https://github.com/yourusername/albion-refining-calculator" target="_blank" class="text-blue-400 hover:text-blue-300">
+                        <i class="bi bi-github mr-1"></i>GitHub
+                    </a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Loading Modal -->
+    <div id="loadingModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-gray-800 rounded-lg p-8 text-center">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
+            <p class="text-white">Aktualizowanie danych...</p>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

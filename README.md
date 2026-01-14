@@ -1,0 +1,131 @@
+# Albion Online Kalkulator Przetwarzania
+
+Nowoczesny, responsywny kalkulator przetwarzania Albion Online z zaawansowanymi funkcjami analitycznymi.
+
+## ✨ Funkcje
+
+### 🧮 Obliczenia zysku
+- **Precyzyjne kalkulacje** - Dokładne obliczenia zysku z przetwarzania zasobów
+- **Analiza focusu** - Optymalizacja kosztów focusu dla maksymalnych zysków
+- **Wszystkie poziomy** - Pełne wsparcie dla T2-T8
+- **Wszystkie typy zasobów** - Tkanina, Sztabka, Skóra, Deska, Kamień
+
+### 📊 Analiza rynkowa
+- **Rzeczywiste ceny** - Dane z Albion Online Data Project API
+- **Porównanie miast** - Znajdź najlepsze miasta na zakup i sprzedaż
+- **Historyczne dane** - Analiza trendów cenowych
+- **Aktualizacje w czasie rzeczywistym** - Jednoklikowa aktualizacja cen
+
+### 🛠️ Zaawansowane funkcje
+- **Kalkulator wymagań materiałowych** - Pokaż dokładne zapotrzebowanie na materiały
+- **Najlepsze miasta sprzedaży** - Automatyczne znajdowanie najwyższych cen
+- **Personalizacja** - Dostosuj ustawienia do swoich potrzeb
+- **Zapisywanie danych** - Twoje ustawienia są zapisywane lokalnie
+
+### 🎨 Nowoczesny interfejs
+- **Responsywny design** - Działa na wszystkich urządzeniach
+- **Ciemny motyw** - Komfortowy dla oczu interfejs
+- **Szybkie ładowanie** - Optymalizowana wydajność
+- **Intuicyjna obsługa** - Łatwy w użyciu nawet dla początkujących
+
+## 🚀 Szybki start
+
+1. **Wybierz zasób** - Kliknij na wybrany typ zasobu (tkanina, sztabka, itp.)
+2. **Ustaw miasta** - Wybierz miasta dla zakupu surowców i sprzedaży produktów
+3. **Aktualizuj ceny** - Kliknij "Aktualizuj wszystkie ceny" aby pobrać aktualne dane
+4. **Analizuj wyniki** - Przejrzyj tabelę z zyskami i rekomendacjami
+
+## ⚙️ Ustawienia
+
+### Podstawowe
+- **Serwer** - Europa, Ameryka, Azja
+- **Podatek rynku** - 2.5%, 6.5%, 10.5%
+- **Wskaźnik zwrotu** - Zależny od lokalizacji i bonusów
+- **Opłata za użycie** - Koszt stacji przetwarzania
+- **Dzienny bonus** - 0%, 10%, 20%
+
+### Zaawansowane
+- **Poziomy mistrzostwa** - T4-T8 dla dodatkowych bonusów
+- **Wizualizacja** - Ukryj/pokaż kolumny focusu
+- **Filtrowanie** - Ukryj nieużywane wiersze
+
+## 📈 Dane API
+
+Aplikacja korzysta z oficjalnych źródeł danych:
+- **Albion Online Data Project** - https://www.albion-online-data.com/
+- **Render API** - https://render.albiononline.com/
+- **Aktualizacje** - Dane są odświeżane w czasie rzeczywistym
+
+## 🛠️ Technologie
+
+- **HTML5** - Semantyczna struktura
+- **CSS3** - Nowoczesny design z Tailwind CSS
+- **JavaScript ES6+** - Czysta implementacja bez frameworków
+- **API Integration** - REST API komunikacja
+- **Responsive Design** - Mobile-first podejście
+
+## 📱 Kompatybilność
+
+Aplikacja działa na:
+- ✅ Chrome 90+
+- ✅ Firefox 88+
+- ✅ Safari 14+
+- ✅ Edge 90+
+- ✅ Mobile Chrome/Firefox
+
+## 🔧 Dewelopment
+
+```bash
+# Klonuj repozytorium
+git clone https://github.com/twoj-nazwa-uzytkownika/albion-refining-calculator.git
+
+# Przejdź do katalogu
+cd albion-refining-calculator
+
+# Uruchom lokalny serwer
+python -m http.server 8000
+# lub
+npx serve .
+```
+
+## 📝 Aktualizacje
+
+### v2.0 (2025)
+- 🆕 Nowoczesny interfejs
+- 🆕 Najlepsze miasta sprzedaży
+- 🆕 Kalkulator wymagań materiałowych
+- 🆕 Szybkie API integracje
+- 🆕 Responsive design
+- 🆕 Ciemny motyw
+
+## 🤝 Współpraca
+
+Witamy contributions! Możesz pomóc poprzez:
+- 🐛 Zgłaszanie bugów
+- 💡 Pomysły na nowe funkcje
+- 🔧 Poprawy kodu
+- 📝 Poprawy dokumentacji
+
+## 📄 Licencja
+
+MIT License - zobacz plik [LICENSE](LICENSE) dla szczegółów.
+
+## 🙏 Podziękowania
+
+- **Albion Online Data Project** - Za wspaniałe API
+- **Sandbox Interactive** - Za tworzenie Albion Online
+- **Społeczność** - Za wsparcie i feedback
+
+## 📞 Kontakt
+
+- 📧 GitHub Issues: https://github.com/twoj-nazwa-uzytkownika/albion-refining-calculator/issues
+- 🎮 Discord: [Twój Discord]
+
+---
+
+**Created with ❤️ for Albion Online Community**
+
+Jeśli aplikacja jest pomocna, rozważ:
+- ⭐ Danie gwiazdki na GitHub
+- 🔄 Udostępnienie znajomym
+- 💰 Wsparcie projektu

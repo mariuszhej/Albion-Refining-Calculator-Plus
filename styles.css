@@ -1,0 +1,344 @@
+/* Custom CSS for Albion Refining Calculator */
+
+/* Dark theme enhancements */
+body {
+    background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1e 100%);
+}
+
+/* Header styles */
+header {
+    backdrop-filter: blur(10px);
+    background: rgba(31, 41, 55, 0.95);
+}
+
+/* Card styles */
+.bg-gray-800 {
+    background: rgba(31, 41, 55, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(75, 85, 99, 0.6);
+}
+
+.bg-gray-800:hover {
+    border-color: rgba(107, 114, 128, 0.8);
+}
+
+/* Resource button styles */
+.resource-btn .bg-gray-700 {
+    transition: all 0.3s ease;
+}
+
+.resource-btn.active .bg-gray-700 {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.resource-btn:hover .bg-gray-700 {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Form elements */
+select, input {
+    background: rgba(31, 41, 55, 0.95);
+    border: 1px solid rgba(107, 114, 128, 0.6);
+    transition: all 0.2s ease;
+}
+
+select:focus, input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Button styles */
+button {
+    transition: all 0.2s ease;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+/* Results table styles */
+.results-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.results-table th,
+.results-table td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(75, 85, 99, 0.6);
+}
+
+.results-table th {
+    background: rgba(31, 41, 55, 0.8);
+    font-weight: 600;
+    color: #f3f4f6;
+}
+
+.results-table tbody tr:hover {
+    background: rgba(75, 85, 99, 0.3);
+}
+
+/* Profit indicators */
+.profit-positive {
+    color: #10b981;
+    font-weight: 600;
+}
+
+.profit-negative {
+    color: #ef4444;
+    font-weight: 600;
+}
+
+.profit-neutral {
+    color: #6b7280;
+}
+
+/* Loading animation */
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .container {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+    
+    .grid-cols-1.md\\:grid-cols-2 {
+        grid-template-columns: 1fr;
+    }
+    
+    .grid-cols-2.md\\:grid-cols-3.lg\\:grid-cols-5 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(31, 41, 55, 0.5);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(107, 114, 128, 0.8);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(156, 163, 175, 0.9);
+}
+
+/* Item image styles */
+.item-image {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+/* City badge styles */
+.city-badge {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    background: rgba(59, 130, 246, 0.2);
+    border: 1px solid rgba(59, 130, 246, 0.4);
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+/* Tier badges */
+.tier-badge {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.tier-2 { background: rgba(156, 163, 175, 0.3); color: #9ca3af; }
+.tier-3 { background: rgba(251, 191, 36, 0.3); color: #fbbf24; }
+.tier-4 { background: rgba(250, 204, 21, 0.3); color: #facc15; }
+.tier-5 { background: rgba(34, 197, 94, 0.3); color: #22c55e; }
+.tier-6 { background: rgba(59, 130, 246, 0.3); color: #3b82f6; }
+.tier-7 { background: rgba(168, 85, 247, 0.3); color: #a855f7; }
+.tier-8 { background: rgba(239, 68, 68, 0.3); color: #ef4444; }
+
+/* Material requirement cards */
+.material-card {
+    background: rgba(55, 65, 81, 0.5);
+    border: 1px solid rgba(75, 85, 99, 0.6);
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.material-card:hover {
+    background: rgba(55, 65, 81, 0.8);
+}
+
+/* Progress bar for calculations */
+.progress-bar {
+    width: 100%;
+    height: 4px;
+    background: rgba(75, 85, 99, 0.6);
+    border-radius: 2px;
+    overflow: hidden;
+    margin: 0.5rem 0;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+
+/* Tooltip styles */
+.tooltip {
+    position: relative;
+    cursor: help;
+}
+
+.tooltip::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(31, 41, 55, 0.95);
+    color: #f3f4f6;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    z-index: 10;
+    margin-bottom: 0.25rem;
+}
+
+.tooltip:hover::before {
+    opacity: 1;
+}
+
+/* Best city ranking */
+.city-rank {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem;
+    background: rgba(55, 65, 81, 0.3);
+    border-radius: 0.5rem;
+    margin-bottom: 0.5rem;
+    transition: all 0.2s ease;
+}
+
+.city-rank:hover {
+    background: rgba(55, 65, 81, 0.6);
+    transform: translateX(4px);
+}
+
+.city-rank-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    color: white;
+    border-radius: 50%;
+    font-weight: bold;
+    margin-right: 1rem;
+    flex-shrink: 0;
+}
+
+.city-rank-1 .city-rank-number {
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+}
+
+.city-rank-2 .city-rank-number {
+    background: linear-gradient(135deg, #9ca3af, #6b7280);
+}
+
+.city-rank-3 .city-rank-number {
+    background: linear-gradient(135deg, #f97316, #ea580c);
+}
+
+/* Settings panel transitions */
+#settingsPanel {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+#settingsPanel.show {
+    max-height: 500px;
+    transition: max-height 0.3s ease-in;
+}
+
+/* Chart container */
+.chart-container {
+    position: relative;
+    height: 300px;
+    margin-top: 1rem;
+}
+
+/* Responsive table */
+@media (max-width: 640px) {
+    .results-table {
+        font-size: 0.75rem;
+    }
+    
+    .results-table th,
+    .results-table td {
+        padding: 0.5rem 0.25rem;
+    }
+    
+    .item-image {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+/* Focus state for accessibility */
+select:focus,
+input:focus,
+button:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+}
+
+/* Print styles */
+@media print {
+    header, footer, button {
+        display: none;
+    }
+    
+    body {
+        background: white;
+        color: black;
+    }
+    
+    .bg-gray-800 {
+        background: white !important;
+        border: 1px solid #ccc !important;
+    }
+}
