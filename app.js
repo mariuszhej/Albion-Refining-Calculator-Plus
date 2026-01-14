@@ -1,4 +1,4 @@
-// Albion Online Refining Calculator - Main JavaScript v0.0.6
+// Albion Online Refining Calculator - Main JavaScript v0.0.7
 // Author: mariuszhej
 // GitHub: https://github.com/mariuszhej/Albion-Refining-Calculator-Plus
 
@@ -183,8 +183,8 @@ class AlbionRefiningCalculator {
         // Resource selection - Multiple approaches for maximum compatibility
         this.setupResourceListeners();
         
-        // Options dropdown toggle
-        this.setupOptionsDropdown();
+        // Top navigation dropdowns
+        this.setupTopNavigation();
         
         // Settings toggle
         const settingsToggle = document.getElementById('settingsToggle');
@@ -267,34 +267,51 @@ class AlbionRefiningCalculator {
         });
     }
     
-    setupOptionsDropdown() {
-        const optionsToggle = document.getElementById('optionsToggle');
-        const optionsDropdown = document.getElementById('optionsDropdown');
+    setupTopNavigation() {
+        // Settings dropdown
+        this.setupTopSettingsDropdown();
         
-        if (optionsToggle && optionsDropdown) {
-            console.log('Setting up options dropdown');
+        // Tools dropdown
+        this.setupToolsDropdown();
+        
+        // Quick refresh button
+        this.setupQuickRefresh();
+        
+        // Server status
+        this.setupServerStatus();
+        
+        // Help button
+        this.setupHelpButton();
+    }
+    
+    setupTopSettingsDropdown() {
+        const settingsToggle = document.getElementById('topSettingsToggle');
+        const settingsDropdown = document.getElementById('topSettingsDropdown');
+        
+        if (settingsToggle && settingsDropdown) {
+            console.log('Setting up top settings dropdown');
             
-            optionsToggle.addEventListener('click', (e) => {
+            settingsToggle.addEventListener('click', (e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                optionsDropdown.classList.toggle('hidden');
+                settingsDropdown.classList.toggle('hidden');
             });
             
             // Close dropdown when clicking outside
             document.addEventListener('click', (e) => {
-                if (optionsToggle && optionsDropdown && 
-                    !optionsToggle.contains(e.target) && 
-                    !optionsDropdown.contains(e.target)) {
-                    optionsDropdown.classList.add('hidden');
+                if (settingsToggle && settingsDropdown && 
+                    !settingsToggle.contains(e.target) && 
+                    !settingsDropdown.contains(e.target)) {
+                    settingsDropdown.classList.add('hidden');
                 }
             });
             
             // Header checkbox listeners
-            ['hideFocusColumnsHeader', 'showDetailColumnsHeader', 'hideUnusedRowsHeader', 'compactModeHeader', 'showTooltipsHeader'].forEach(id => {
+            ['hideFocusColumnsTop', 'showDetailColumnsTop', 'hideUnusedRowsTop', 'compactModeTop', 'showTooltipsTop'].forEach(id => {
                 const checkbox = document.getElementById(id);
                 if (checkbox) {
                     checkbox.addEventListener('change', () => {
-                        const settingId = id.replace('Header', '');
+                        const settingId = id.replace('Top', '');
                         const mainCheckbox = document.getElementById(settingId);
                         if (mainCheckbox) {
                             mainCheckbox.checked = checkbox.checked;
@@ -305,12 +322,140 @@ class AlbionRefiningCalculator {
             });
             
             // Reset settings button
-            const resetBtn = document.getElementById('resetSettingsHeader');
+            const resetBtn = document.getElementById('resetAllSettingsTop');
             if (resetBtn) {
                 resetBtn.addEventListener('click', () => {
                     this.resetAllSettings();
                 });
             }
+        }
+    }
+    
+    setupToolsDropdown() {
+        const toolsToggle = document.getElementById('toolsDropdownToggle');
+        const toolsDropdown = document.getElementById('toolsDropdown');
+        
+        if (toolsToggle && toolsDropdown) {
+            toolsToggle.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                toolsDropdown.classList.toggle('hidden');
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', (e) => {
+                if (toolsToggle && toolsDropdown && 
+                    !toolsToggle.contains(e.target) && 
+                    !toolsDropdown.contains(e.target)) {
+                    toolsDropdown.classList.add('hidden');
+                }
+            });
+        }
+    }
+    
+    setupQuickRefresh() {
+        const quickRefreshBtn = document.getElementById('quickRefreshPrices');
+        if (quickRefreshBtn) {
+            quickRefreshBtn.addEventListener('click', () => {
+                this.quickRefreshPrices();
+            });
+        }
+    }
+    
+    setupServerStatus() {
+        const serverStatusSelect = document.getElementById('serverStatusSelect');
+        if (serverStatusSelect) {
+            serverStatusSelect.addEventListener('change', (e) => {
+                const serverSelect = document.getElementById('serverSelect');
+                if (serverSelect) {
+                    serverSelect.value = e.target.value;
+                    this.saveSettings();
+                }
+            });
+        }
+    }
+    
+    setupHelpButton() {
+        const helpBtn = document.getElementById('helpButton');
+        if (helpBtn) {
+            helpBtn.addEventListener('click', () => {
+                this.showHelpModal();
+            });
+        }
+    }
+    
+    quickRefreshPrices() {
+        console.log('Quick refresh triggered');
+        this.showNotification('Szybko aktualizuję ceny...', 'info');
+        this.updateAllPrices();
+    }
+    
+    showHelpModal() {
+        // Create modal if doesn't exist
+        let modal = document.getElementById('helpModal');
+        if (!modal) {
+            modal = document.createElement('div');
+            modal.id = 'helpModal';
+            modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+            modal.innerHTML = `
+                <div class="bg-gray-800 rounded-lg p-6 max-w-2xl border border-gray-700 mx-4">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-xl font-bold text-white">Pomoc i Dokumentacja</h2>
+                        <button onclick="this.parentElement.parentElement.parentElement.remove()" class="text-gray-400 hover:text-gray-200">
+                            <i class="bi bi-x-lg"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-300 mb-2">🎯 Jak używać kalkulatora</h3>
+                            <ul class="text-gray-400 space-y-1">
+                                <li>• Wybierz zasób do przetwarzania (tkanina, sztabka, skóra, deska, kamień)</li>
+                                <li>• Ustaw miasta zakupu i sprzedaży surowców</li>
+                                <li>• Kliknij "Odśwież ceny" aby pobrać aktualne dane</li>
+                                <li>• Analizuj wyniki w tabeli z zyskami</li>
+                                <li>• Sprawdź wymagania materiałowe dla produktów</li>
+                                <li>• Znajdź najlepsze miasta dla sprzedaży</li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-300 mb-2">🔧 Zaawansowane funkcje</h3>
+                            <ul class="text-gray-400 space-y-1">
+                                <li>• Ustawienia mistrzostwa dla bonusów</li>
+                                <li>• Konfiguracja wskaźników zwrotu i podatków</li>
+                                <li>• Opcje wyświetlania (tryb kompaktowy, ukrywanie kolumn)</li>
+                                <li>• Analiza zysku z uwzględnieniem focusu</li>
+                                <li>• Porównanie miast dla optymalnej sprzedaży</li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-300 mb-2">⌨️ Skróty klawiszowe</h3>
+                            <ul class="text-gray-400 space-y-1">
+                                <li>• <kbd class="px-2 py-1 bg-gray-700 rounded">Alt</kbd> + <kbd class="px-2 py-1 bg-gray-700 rounded">C</kbd> - Zmień motyw</li>
+                                <li>• <kbd class="px-2 py-1 bg-gray-700 rounded">F5</kbd> - Odśwież ceny</li>
+                                <li>• <kbd class="px-2 py-1 bg-gray-700 rounded">S</kbd> - Ustawienia</li>
+                                <li>• <kbd class="px-2 py-1 bg-gray-700 rounded">H</kbd> - Pomoc</li>
+                                <li>• <kbd class="px-2 py-1 bg-gray-700 rounded">Esc</kbd> - Zamknij modale</li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-300 mb-2">📚 Źródła i linki</h3>
+                            <ul class="text-gray-400 space-y-1">
+                                <li>• <a href="https://github.com/mariuszhej/Albion-Refining-Calculator-Plus" target="_blank" class="text-blue-400 hover:text-blue-300">GitHub Repository</a></li>
+                                <li>• <a href="https://www.albion-online-data.com/" target="_blank" class="text-blue-400 hover:text-blue-300">Albion Data Project API</a></li>
+                                <li>• <a href="https://albiononline2d.com/" target="_blank" class="text-blue-400 hover:text-blue-300">Albion 2D Database</a></li>
+                                <li>• <a href="https://render.albiononline.com/" target="_blank" class="text-blue-400 hover:text-blue-300">Render API</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        } else {
+            modal.classList.remove('hidden');
         }
     }
     
