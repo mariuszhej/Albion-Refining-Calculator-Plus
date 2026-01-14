@@ -56,6 +56,30 @@ Aplikacja korzysta z oficjalnych źródeł danych:
 - **Render API** - https://render.albiononline.com/
 - **Aktualizacje** - Dane są odświeżane w czasie rzeczywistym
 
+## ⚙️ Nowe funkcje w v0.0.2
+
+### 🔄 Poprawione aktualizacje cen
+- **Dwa tryby cen**: Aktualne i średnie
+- **Konfigurowalny okres**: 1 godzina - 1 miesiąc dla średnich
+- **Wybór jakości**: Normalna do Mistrzowskiej
+- **Trzy serwery**: Europa, Ameryka, Azja
+
+### 🏛️ Rozszerzone ustawienia
+- **Własny wskaźnik zwrotu**: Możliwość wpisania własnej wartości
+- **Ilość przetwarzania**: Wybór liczby sztuk do przetworzenia
+- **Podatek rynku**: 2.5%, 6.5%, 10.5%
+- **Opłata stacji**: Dowolna opłata za użycie
+
+### 📊 Zaawansowane opcje wyświetlania
+- **Ukrywanie kolumn**: Focus, szczegółowe
+- **Filtrowanie wierszy**: Ukryj nierentowne
+- **Szczegółowe kolumny**: Koszt surowca, podatek, opłata
+
+### 🖼️ Poprawione ikony
+- **Grafiki zasobów**: T2 resource icons z render API
+- **Dynamiczne ikony**: Zależne od wybranego typu
+- **Szybkie ładowanie**: Optymalizowane obrazki
+
 ## 🛠️ Technologie
 
 - **HTML5** - Semantyczna struktura
@@ -90,7 +114,18 @@ npx serve .
 
 ## 📝 Aktualizacje
 
-### v2.0 (2025)
+### v0.0.2 (2025)
+- ✅ **Poprawiony problem z cenami** - Teraz działają poprawnie
+- ✅ **Wybór serwera** - Europa, Ameryka, Azja
+- ✅ **Typy cen** - Aktualne i średnie
+- ✅ **Okres czasu** - Konfigurowalny dla średnich
+- ✅ **Własny wskaźnik zwrotu** - Możliwość wpisania wartości
+- ✅ **Ilość przetwarzania** - Wybór liczby sztuk
+- ✅ **Zaawansowane opcje** - Ukrywanie kolumn i wierszy
+- ✅ **Grafiki zasobów** - T2 resource icons z API
+- ✅ **Szczegółowe obliczenia** - Więcej kolumn opcjonalnych
+
+### v0.0.1 (2025)
 - 🆕 Nowoczesny interfejs
 - 🆕 Najlepsze miasta sprzedaży
 - 🆕 Kalkulator wymagań materiałowych

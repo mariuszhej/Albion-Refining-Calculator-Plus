@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Albion Online Kalkulator Przetwarzania</title>
+    <title>Albion Online Kalkulator Przetwarzania v0.0.2</title>
     <meta name="description" content="Nowoczesny kalkulator przetwarzania Albion Online - oblicz zyski, wymagania materiałowe i najlepsze miasta sprzedaży.">
     <meta name="keywords" content="albion online, kalkulator przetwarzania, refining, zysk, materiały, ceny">
     <meta name="author" content="Albion Refining Calculator">
+    <meta name="version" content="0.0.2">
     
     <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Albion Online Kalkulator Przetwarzania">
+    <meta property="og:title" content="Albion Online Kalkulator Przetwarzania v0.0.2">
     <meta property="og:description" content="Nowoczesny kalkulator przetwarzania Albion Online - oblicz zyski, wymagania materiałowe i najlepsze miasta sprzedaży">
     <meta property="og:type" content="website">
     
@@ -43,7 +44,7 @@
     <main class="container mx-auto px-4 py-6">
         <!-- Settings Panel (Initially Hidden) -->
         <div id="settingsPanel" class="hidden bg-gray-800 rounded-lg p-6 mb-6 border border-gray-700">
-            <h2 class="text-xl font-semibold mb-4 text-white">Ustawienia</h2>
+            <h2 class="text-xl font-semibold mb-4 text-white">Ustawienia przetwarzania</h2>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Server Selection -->
@@ -58,7 +59,10 @@
 
                 <!-- Market Tax -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-300 mb-2">Podatek rynku</label>
+                    <label class="flex items-center text-sm font-medium text-gray-300 mb-2">
+                        Podatek rynku
+                        <span class="ml-auto text-xs text-gray-400">(standardowo 6.5%)</span>
+                    </label>
                     <select id="marketTax" class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white">
                         <option value="2.5">2.5% (Bez premii)</option>
                         <option value="6.5" selected>6.5% (Standardowy)</option>
@@ -74,19 +78,22 @@
                         <option value="36.7">Królewskie Miasto + Bonus (36.7%)</option>
                         <option value="0">Królewska Wyspa (0%)</option>
                         <option value="28.5">Królewska Wyspa + Bonus (28.5%)</option>
+                        <option value="custom">Własny</option>
                     </select>
+                    <input type="number" id="customReturnRate" value="15.2" min="0" max="100" step="0.1" 
+                           class="hidden w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white text-sm">
                 </div>
 
                 <!-- Usage Fee -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-300 mb-2">Opłata za użycie</label>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Opłata za użycie stacji</label>
                     <input type="number" id="usageFee" value="0" min="0" max="9999" 
                            class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white">
                 </div>
 
                 <!-- Daily Bonus -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-300 mb-2">Dzienny bonus</label>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Dzienny bonus premium</label>
                     <select id="dailyBonus" class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white">
                         <option value="0">0%</option>
                         <option value="10">10%</option>
@@ -94,20 +101,71 @@
                     </select>
                 </div>
 
-                <!-- Mastery Levels -->
+                <!-- Refining Amount -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-300 mb-2">Poziom mistrzostwa T4-T8</label>
-                    <div class="flex space-x-2">
-                        <input type="number" id="masteryT4" value="0" min="0" max="100" placeholder="T4" 
-                               class="w-1/4 px-2 py-1 bg-gray-700 border border-gray-600 rounded text-white text-sm">
-                        <input type="number" id="masteryT5" value="0" min="0" max="100" placeholder="T5" 
-                               class="w-1/4 px-2 py-1 bg-gray-700 border border-gray-600 rounded text-white text-sm">
-                        <input type="number" id="masteryT6" value="0" min="0" max="100" placeholder="T6" 
-                               class="w-1/4 px-2 py-1 bg-gray-700 border border-gray-600 rounded text-white text-sm">
-                        <input type="number" id="masteryT7" value="0" min="0" max="100" placeholder="T7" 
-                               class="w-1/4 px-2 py-1 bg-gray-700 border border-gray-600 rounded text-white text-sm">
-                        <input type="number" id="masteryT8" value="0" min="0" max="100" placeholder="T8" 
-                               class="w-1/4 px-2 py-1 bg-gray-700 border border-gray-600 rounded text-white text-sm">
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Ilość przetwarzania</label>
+                    <input type="number" id="refiningAmount" value="1" min="1" max="1000" 
+                           class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white">
+                </div>
+            </div>
+
+            <div class="mt-6 pt-6 border-t border-gray-700">
+                <h3 class="text-lg font-semibold mb-4 text-white">Poziomy mistrzostwa (T4-T8)</h3>
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">T4</label>
+                        <input type="number" id="masteryT4" value="0" min="0" max="100" 
+                               class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">T5</label>
+                        <input type="number" id="masteryT5" value="0" min="0" max="100" 
+                               class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">T6</label>
+                        <input type="number" id="masteryT6" value="0" min="0" max="100" 
+                               class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">T7</label>
+                        <input type="number" id="masteryT7" value="0" min="0" max="100" 
+                               class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">T8</label>
+                        <input type="number" id="masteryT8" value="0" min="0" max="100" 
+                               class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white">
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-6 pt-6 border-t border-gray-700">
+                <h3 class="text-lg font-semibold mb-4 text-white">Opcje wyświetlania</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="flex items-center text-sm font-medium text-gray-300">
+                            <input type="checkbox" id="hideFocusColumns" class="mr-2">
+                            Ukryj kolumny focusu
+                        </label>
+                    </div>
+                    <div>
+                        <label class="flex items-center text-sm font-medium text-gray-300">
+                            <input type="checkbox" id="showDetailColumns" class="mr-2">
+                            Pokaż szczegółowe kolumny
+                        </label>
+                    </div>
+                    <div>
+                        <label class="flex items-center text-sm font-medium text-gray-300">
+                            <input type="checkbox" id="hideUnusedRows" class="mr-2">
+                            Ukryj nieużywane wiersze
+                        </label>
+                    </div>
+                    <div>
+                        <label class="flex items-center text-sm font-medium text-gray-300">
+                            <input type="checkbox" id="stackProfits" class="mr-2">
+                            Sumuj zyski z niższych poziomów
+                        </label>
                     </div>
                 </div>
             </div>
@@ -120,35 +178,35 @@
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
                 <button class="resource-btn active" data-resource="cloth">
                     <div class="bg-gray-700 rounded-lg p-4 hover:bg-gray-600 transition-colors text-center">
-                        <div class="text-2xl mb-2">🧵</div>
+                        <img src="https://render.albiononline.com/v1/item/T2_CLOTH.png" alt="Tkanina" class="w-12 h-12 mx-auto mb-2 object-contain">
                         <div class="text-sm font-medium">Tkanina</div>
                     </div>
                 </button>
                 
                 <button class="resource-btn" data-resource="bar">
                     <div class="bg-gray-700 rounded-lg p-4 hover:bg-gray-600 transition-colors text-center">
-                        <div class="text-2xl mb-2">⚒️</div>
+                        <img src="https://render.albiononline.com/v1/item/T2_METALBAR.png" alt="Sztabka" class="w-12 h-12 mx-auto mb-2 object-contain">
                         <div class="text-sm font-medium">Sztabka</div>
                     </div>
                 </button>
                 
                 <button class="resource-btn" data-resource="leather">
                     <div class="bg-gray-700 rounded-lg p-4 hover:bg-gray-600 transition-colors text-center">
-                        <div class="text-2xl mb-2">🦴</div>
+                        <img src="https://render.albiononline.com/v1/item/T2_LEATHER.png" alt="Skóra" class="w-12 h-12 mx-auto mb-2 object-contain">
                         <div class="text-sm font-medium">Skóra</div>
                     </div>
                 </button>
                 
                 <button class="resource-btn" data-resource="plank">
                     <div class="bg-gray-700 rounded-lg p-4 hover:bg-gray-600 transition-colors text-center">
-                        <div class="text-2xl mb-2">🪵</div>
+                        <img src="https://render.albiononline.com/v1/item/T2_PLANKS.png" alt="Deska" class="w-12 h-12 mx-auto mb-2 object-contain">
                         <div class="text-sm font-medium">Deska</div>
                     </div>
                 </button>
                 
                 <button class="resource-btn" data-resource="stone">
                     <div class="bg-gray-700 rounded-lg p-4 hover:bg-gray-600 transition-colors text-center">
-                        <div class="text-2xl mb-2">🪨</div>
+                        <img src="https://render.albiononline.com/v1/item/T2_STONEBLOCK.png" alt="Kamień" class="w-12 h-12 mx-auto mb-2 object-contain">
                         <div class="text-sm font-medium">Kamień</div>
                     </div>
                 </button>
@@ -158,13 +216,32 @@
         <!-- Price Update Section -->
         <div class="bg-gray-800 rounded-lg p-6 mb-6 border border-gray-700">
             <div class="flex items-center justify-between mb-4">
-                <h2 class="text-xl font-semibold text-white">Aktualizuj ceny</h2>
+                <h2 class="text-xl font-semibold text-white">Aktualizacja cen</h2>
                 <button id="updateAllPrices" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors text-white">
                     <i class="bi bi-arrow-clockwise mr-2"></i>Aktualizuj wszystkie ceny
                 </button>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <!-- Server Selection -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Serwer</label>
+                    <select id="priceServerSelect" class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white">
+                        <option value="europe">Europa</option>
+                        <option value="west">Ameryka</option>
+                        <option value="east">Azja</option>
+                    </select>
+                </div>
+                
+                <!-- Price Type -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Typ cen</label>
+                    <select id="priceType" class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white">
+                        <option value="current">Aktualne</option>
+                        <option value="average">Średnie</option>
+                    </select>
+                </div>
+                
                 <div>
                     <label class="block text-sm font-medium text-gray-300 mb-2">Miasto - surowce</label>
                     <select id="resourceCity" class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white">
@@ -192,13 +269,46 @@
                 </div>
             </div>
             
+            <!-- Time Period for Average Prices -->
+            <div id="timePeriodSection" class="hidden mt-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">Okres czasu</label>
+                        <select id="timePeriod" class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white">
+                            <option value="1">1 Godzina</option>
+                            <option value="6">6 Godzin</option>
+                            <option value="24" selected>1 Dzień</option>
+                            <option value="72">3 Dni</option>
+                            <option value="168">1 Tydzień</option>
+                            <option value="720">1 Miesiąc</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">Jakość przedmiotu</label>
+                        <select id="itemQuality" class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white">
+                            <option value="1">Normalna (1)</option>
+                            <option value="2">Dobra (2)</option>
+                            <option value="3">Wspaniała (3)</option>
+                            <option value="4">Doskonała (4)</option>
+                            <option value="5">Mistrzowska (5)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
             <div class="mt-4">
                 <div class="bg-blue-900 bg-opacity-50 border border-blue-700 rounded-lg p-4">
-                    <div class="flex items-center">
-                        <i class="bi bi-info-circle text-blue-400 mr-2"></i>
-                        <span class="text-sm text-blue-200">
-                            Ceny są aktualizowane z Albion Online Data Project API. Ostatnia aktualizacja: <span id="lastUpdate">Nigdy</span>
-                        </span>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <i class="bi bi-info-circle text-blue-400 mr-2"></i>
+                            <span class="text-sm text-blue-200">
+                                Ceny są aktualizowane z Albion Online Data Project API
+                            </span>
+                        </div>
+                        <div class="text-sm text-blue-200">
+                            Ostatnia aktualizacja: <span id="lastUpdate">Nigdy</span>
+                        </div>
                     </div>
                 </div>
             </div>
