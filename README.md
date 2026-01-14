@@ -4,7 +4,8 @@ Nowoczesny, responsywny kalkulator przetwarzania Albion Online z zaawansowanymi 
 
 **Autor:** [mariuszhej](https://github.com/mariuszhej)  
 **GitHub:** [Albion-Refining-Calculator-Plus](https://github.com/mariuszhej/Albion-Refining-Calculator-Plus)  
-**Live Demo:** https://mariuszhej.github.io/Albion-Refining-Calculator-Plus/
+**Live Demo:** https://mariuszhej.github.io/Albion-Refining-Calculator-Plus/  
+**Wersja:** 0.0.4 (ostatnia aktualizacja: 2025-01-14)
 
 ## ✨ Funkcje
 
@@ -123,6 +124,17 @@ npx serve .
 ```
 
 ## 📝 Aktualizacje
+
+### v0.0.4 (2025)
+- 🔧 **Przycisk zębatki z opcjami** - Szybki dostęp do ustawień na głównej stronie
+- 🎨 **Menu rozwijane z opcjami** - Ukrywanie kolumn, tryb kompaktowy, podpowiedzi
+- 🔄 **Reset ustawień** - Jednoklikowe przywrócenie domyślnych ustawień
+- 🐛 **Zaawansowana naprawa przycisków zasobów** - Wielopoziomowe approach
+- 🖱️ **Wiele metod obsługi kliknięć** - Click, mousedown, touch, event delegation
+- 🎯 **Debugowanie wielopoziomowe** - Szczegółowe logi dla diagnostyki
+- ⚡ **Wizualne potwierdzenia** - Animacje i powiadomienia
+- 📱 **Poprawiona responsywność** - Lepsze wsparcie dla urządzeń mobilnych
+- 🎨 **Enhanced UI/UX** - Lepsze przejścia, cienie, i feedback
 
 ### v0.0.3 (2025)
 - 🐛 **Naprawiono aktywację przycisków zasobów** - Teraz poprawnie się podświetlają

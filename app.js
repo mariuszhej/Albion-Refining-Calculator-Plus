@@ -1,4 +1,4 @@
-// Albion Online Refining Calculator - Main JavaScript v0.0.3
+// Albion Online Refining Calculator - Main JavaScript v0.0.4
 // Author: mariuszhej
 // GitHub: https://github.com/mariuszhej/Albion-Refining-Calculator-Plus
 
@@ -143,6 +143,15 @@ class AlbionRefiningCalculator {
     afterDOMReady() {
         console.log('DOM ready, setting up calculator...');
         
+        // Check critical elements first
+        const resourceButtons = document.querySelectorAll('.resource-btn');
+        console.log('Found resource buttons:', resourceButtons.length);
+        
+        resourceButtons.forEach((btn, index) => {
+            console.log(`Button ${index}:`, btn);
+            console.log(`Data resource: ${btn.dataset.resource}`);
+        });
+        
         this.setupEventListeners();
         this.applySettings();
         this.loadStoredPrices();
@@ -151,25 +160,37 @@ class AlbionRefiningCalculator {
         
         console.log('Calculator initialized successfully');
         console.log('Current resource:', this.currentResource);
-        console.log('Available resource buttons:', document.querySelectorAll('.resource-btn').length);
+        console.log('Available resource buttons:', resourceButtons.length);
+        
+        // Test button click programmatically
+        this.testButtonFunctionality();
+    }
+    
+    testButtonFunctionality() {
+        console.log('Testing button functionality...');
+        const firstBtn = document.querySelector('[data-resource="cloth"]');
+        if (firstBtn) {
+            console.log('Testing first button click...');
+            setTimeout(() => {
+                firstBtn.click();
+            }, 1000);
+        }
     }
     
     setupEventListeners() {
         console.log('Setting up event listeners...');
         
-        // Resource selection
-        document.querySelectorAll('.resource-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.preventDefault();
-                console.log('Resource button clicked:', btn.dataset.resource);
-                this.selectResource(btn.dataset.resource);
-            });
-        });
+        // Resource selection - Multiple approaches for maximum compatibility
+        this.setupResourceListeners();
+        
+        // Options dropdown toggle
+        this.setupOptionsDropdown();
         
         // Settings toggle
         const settingsToggle = document.getElementById('settingsToggle');
         if (settingsToggle) {
-            settingsToggle.addEventListener('click', () => {
+            settingsToggle.addEventListener('click', (e) => {
+                e.preventDefault();
                 const panel = document.getElementById('settingsPanel');
                 if (panel) {
                     panel.classList.toggle('hidden');
@@ -180,11 +201,118 @@ class AlbionRefiningCalculator {
         // Update prices
         const updateBtn = document.getElementById('updateAllPrices');
         if (updateBtn) {
-            updateBtn.addEventListener('click', () => {
+            updateBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                console.log('Update button clicked');
                 this.updateAllPrices();
             });
         }
         
+        // Other listeners (existing logic)
+        this.setupOtherListeners();
+        
+        console.log('Event listeners setup complete');
+    }
+    
+    setupResourceListeners() {
+        const resourceButtons = document.querySelectorAll('.resource-btn');
+        console.log('Setting up listeners for', resourceButtons.length, 'resource buttons');
+        
+        // Method 1: Direct event listeners
+        resourceButtons.forEach((btn, index) => {
+            console.log(`Setting up listener for button ${index}:`, btn);
+            
+            // Try multiple event types for compatibility
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('CLICK - Resource button clicked:', btn.dataset.resource);
+                this.selectResource(btn.dataset.resource);
+            });
+            
+            btn.addEventListener('mousedown', (e) => {
+                e.preventDefault();
+                console.log('MOUSEDOWN - Resource button clicked:', btn.dataset.resource);
+            });
+            
+            // Touch support
+            btn.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                console.log('TOUCH - Resource button clicked:', btn.dataset.resource);
+            });
+            
+            // Make sure button is clickable
+            btn.style.cursor = 'pointer';
+            btn.style.pointerEvents = 'auto';
+        });
+        
+        // Method 2: Event delegation (backup)
+        document.addEventListener('click', (e) => {
+            const target = e.target.closest('.resource-btn');
+            if (target) {
+                e.preventDefault();
+                console.log('DELEGATION - Resource button clicked:', target.dataset.resource);
+                this.selectResource(target.dataset.resource);
+            }
+        });
+        
+        // Method 3: Direct inline onclick (last resort)
+        resourceButtons.forEach((btn) => {
+            btn.onclick = (e) => {
+                e.preventDefault();
+                console.log('INLINE - Resource button clicked:', btn.dataset.resource);
+                this.selectResource(btn.dataset.resource);
+                return false;
+            };
+        });
+    }
+    
+    setupOptionsDropdown() {
+        const optionsToggle = document.getElementById('optionsToggle');
+        const optionsDropdown = document.getElementById('optionsDropdown');
+        
+        if (optionsToggle && optionsDropdown) {
+            console.log('Setting up options dropdown');
+            
+            optionsToggle.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                optionsDropdown.classList.toggle('hidden');
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!optionsToggle.contains(e.target) && !optionsDropdown.contains(e.target)) {
+                    optionsDropdown.classList.add('hidden');
+                }
+            });
+            
+            // Header checkbox listeners
+            ['hideFocusColumnsHeader', 'showDetailColumnsHeader', 'hideUnusedRowsHeader', 'compactModeHeader', 'showTooltipsHeader'].forEach(id => {
+                const checkbox = document.getElementById(id);
+                if (checkbox) {
+                    checkbox.addEventListener('change', () => {
+                        const settingId = id.replace('Header', '');
+                        const mainCheckbox = document.getElementById(settingId);
+                        if (mainCheckbox) {
+                            mainCheckbox.checked = checkbox.checked;
+                            mainCheckbox.dispatchEvent(new Event('change'));
+                        }
+                    });
+                }
+            });
+            
+            // Reset settings button
+            const resetBtn = document.getElementById('resetSettingsHeader');
+            if (resetBtn) {
+                resetBtn.addEventListener('click', () => {
+                    this.resetAllSettings();
+                });
+            }
+        }
+    }
+    
+    setupOtherListeners() {
         // Settings changes
         const settingsElements = document.querySelectorAll('#settingsPanel select, #settingsPanel input');
         settingsElements.forEach(input => {
@@ -250,29 +378,89 @@ class AlbionRefiningCalculator {
                 });
             }
         });
+    }
+    
+    resetAllSettings() {
+        console.log('Resetting all settings...');
+        localStorage.removeItem('albionRefiningSettings');
+        localStorage.removeItem('albionRefiningPrices');
+        localStorage.removeItem('albionRefiningLastUpdate');
         
-        console.log('Event listeners setup complete');
+        // Reset to defaults
+        this.settings = this.loadSettings();
+        this.prices = {};
+        this.lastUpdateTime = null;
+        
+        // Re-apply settings
+        this.applySettings();
+        this.updateLastUpdateTime();
+        this.calculateProfits();
+        
+        // Close dropdown
+        document.getElementById('optionsDropdown').classList.add('hidden');
+        
+        // Show confirmation
+        this.showNotification('Ustawienia zostały zresetowane');
+    }
+    
+    showNotification(message) {
+        const notification = document.createElement('div');
+        notification.className = 'fixed top-4 right-4 bg-green-600 text-white px-4 py-2 rounded-lg shadow-lg z-50';
+        notification.textContent = message;
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.remove();
+        }, 3000);
     }
     
     selectResource(resource) {
-        console.log('Selecting resource:', resource);
+        console.log('=== SELECTING RESOURCE ===');
+        console.log('Resource parameter:', resource);
+        console.log('Type of resource:', typeof resource);
+        
         this.currentResource = resource;
         
-        // Update UI
-        document.querySelectorAll('.resource-btn').forEach(btn => {
+        // Update UI with multiple attempts
+        console.log('Updating UI...');
+        
+        // Method 1: Standard querySelector
+        const targetBtn = document.querySelector(`[data-resource="${resource}"]`);
+        console.log('Target button found:', !!targetBtn);
+        
+        if (targetBtn) {
+            console.log('Target button details:', targetBtn);
+            console.log('Target button data-resource:', targetBtn.dataset.resource);
+        }
+        
+        // Remove active from all buttons
+        const allButtons = document.querySelectorAll('.resource-btn');
+        console.log('All buttons found:', allButtons.length);
+        
+        allButtons.forEach((btn, index) => {
+            console.log(`Processing button ${index}:`, btn.dataset.resource);
             btn.classList.remove('active');
         });
         
-        const targetBtn = document.querySelector(`[data-resource="${resource}"]`);
+        // Add active to target button
         if (targetBtn) {
             targetBtn.classList.add('active');
-            console.log('Resource button activated:', resource);
+            console.log('SUCCESS: Resource button activated:', resource);
+            
+            // Force visual update
+            targetBtn.style.backgroundColor = '#2563eb';
+            setTimeout(() => {
+                targetBtn.style.backgroundColor = '';
+            }, 200);
         } else {
-            console.error('Resource button not found:', resource);
+            console.error('ERROR: Resource button not found for resource:', resource);
+            console.log('Available buttons:', Array.from(allButtons).map(b => b.dataset.resource));
         }
         
         this.calculateProfits();
         this.updateResourceImages();
+        
+        console.log('=== RESOURCE SELECTION COMPLETE ===');
     }
     
     updateResourceImages() {
